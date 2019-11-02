@@ -10,9 +10,9 @@ import java.util.Optional;
 @Service
 public class CampanhaService {
 
-    private CampanhaRepository<Campanha, Integer> campanhaRepository;
+    private CampanhaRepository<Campanha, Long> campanhaRepository;
 
-    public CampanhaService(CampanhaRepository<Campanha, Integer> campanhaRepository) {
+    public CampanhaService(CampanhaRepository<Campanha, Long> campanhaRepository) {
         this.campanhaRepository = campanhaRepository;
     }
 
@@ -20,7 +20,7 @@ public class CampanhaService {
         return this.campanhaRepository.save(campanha);
     }
 
-    public Optional<Campanha> getCampanha(int id) {
+    public Optional<Campanha> getCampanha(long id) {
         return this.campanhaRepository.findById(id);
     }
 

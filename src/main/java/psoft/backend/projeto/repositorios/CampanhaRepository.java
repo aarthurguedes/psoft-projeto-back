@@ -7,5 +7,5 @@ import psoft.backend.projeto.entidades.Campanha;
 import java.io.Serializable;
 
 @Repository
-public interface CampanhaRepository<T, ID extends Serializable> extends JpaRepository<Campanha, Integer> {
+public interface CampanhaRepository<T, ID extends Serializable> extends JpaRepository<Campanha, Long> {
 }
