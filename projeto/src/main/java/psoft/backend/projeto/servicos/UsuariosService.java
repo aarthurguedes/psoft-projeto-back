@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import psoft.backend.projeto.entidades.Usuario;
 import psoft.backend.projeto.repositorios.UsuariosRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,9 @@ public class UsuariosService {
 
     public Optional<Usuario> getUsuario(String email) {
         return this.usuariosRepository.findById(email);
+    }
+
+    public List<Usuario> getUsuarios() {
+        return this.usuariosRepository.findAll();
     }
 }

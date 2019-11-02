@@ -2,6 +2,7 @@ package psoft.backend.projeto.controladores;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import psoft.backend.projeto.entidades.Usuario;
 import psoft.backend.projeto.servicos.UsuariosService;
 
 import javax.servlet.ServletException;
+import java.util.List;
 
 @RestController
 public class UsuariosController {
@@ -26,5 +28,11 @@ public class UsuariosController {
         }
 
         return new ResponseEntity<>(usuariosService.cadastraUsuario(usuario), HttpStatus.OK);
+    }
+
+    // Rota para teste
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<Usuario>> getUsuarios() {
+        return new ResponseEntity<>(usuariosService.getUsuarios(), HttpStatus.OK);
     }
 }
