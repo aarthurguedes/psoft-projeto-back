@@ -1,0 +1,12 @@
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/entidades/Campanha.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/UsuariosController.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/CampanhaService.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/ProjetoApplication.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/entidades/Usuario.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/CampanhaController.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/JWTService.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/filtros/TokenFilter.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/LoginController.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/repositorios/CampanhaRepository.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/repositorios/UsuariosRepository.java
+/home/danilomf/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/UsuariosService.java
