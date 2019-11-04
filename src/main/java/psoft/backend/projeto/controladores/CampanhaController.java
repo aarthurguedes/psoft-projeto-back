@@ -29,7 +29,7 @@ public class CampanhaController {
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> cadastraCampanha(@RequestHeader("Authorization") String header, @RequestBody Campanha campanha) throws ServletException {
         try {
-            if (jwtService.usuarioTemPermissao(header)) {
+            if (jwtService.usuarioTemPermissao(header, campanha.getUsuarioDono())) {
                 if(campanhaService.getCampanha(campanha.getId()).isPresent()) {
                     throw new ServletException("Campanha já cadastrada!");
                 }
