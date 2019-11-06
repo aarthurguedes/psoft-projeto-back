@@ -5,6 +5,7 @@ import psoft.backend.projeto.entidades.Campanha;
 import psoft.backend.projeto.repositorios.CampanhaRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,10 @@ public class CampanhaService {
 
     public Optional<Campanha> getCampanha(long id) {
         return this.campanhaRepository.findById(id);
+    }
+
+    public Optional<Campanha> getCampanha(String url) {
+        return this.campanhaRepository.findByUrl(url);
     }
 
     public List<Campanha> getCampanhas() {

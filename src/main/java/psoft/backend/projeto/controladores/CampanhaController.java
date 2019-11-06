@@ -9,6 +9,8 @@ import psoft.backend.projeto.servicos.JWTService;
 
 import javax.servlet.ServletException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 public class CampanhaController {
@@ -27,10 +29,11 @@ public class CampanhaController {
     }
 
     @PostMapping("/campanhas")
-    public ResponseEntity<Campanha> cadastraCampanha(@RequestHeader("Authorization") String header, @RequestBody Campanha campanha) throws ServletException {
+    public ResponseEntity<Campanha> cadastraCampanha(@RequestHeader("Authorization") String header, @RequestBody Campanha campanha)
+            throws ServletException {
         try {
             if (jwtService.usuarioTemPermissao(header, campanha.getUsuarioDono())) {
-                if(campanhaService.getCampanha(campanha.getId()).isPresent()) {
+                if (campanhaService.getCampanha(campanha.getUrl()).isPresent()) {
                     throw new ServletException("Campanha já cadastrada!");
                 }
 
@@ -41,5 +44,14 @@ public class CampanhaController {
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/campanhas/{url}")
+    public ResponseEntity<Optional<Campanha>> getCampanha(@PathVariable ("url") String url) {
+        if (!campanhaService.getCampanha(url).isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
     }
 }

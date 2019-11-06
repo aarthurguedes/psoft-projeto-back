@@ -1,0 +1,12 @@
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/UsuariosController.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/repositorios/UsuariosRepository.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/entidades/Usuario.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/filtros/TokenFilter.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/entidades/Campanha.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/CampanhaService.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/UsuariosService.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/servicos/JWTService.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/CampanhaController.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/controladores/LoginController.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/ProjetoApplication.java
+/home/arthur/Documentos/git/psoft-projeto-back/src/main/java/psoft/backend/projeto/repositorios/CampanhaRepository.java
