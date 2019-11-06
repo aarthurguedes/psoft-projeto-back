@@ -2,6 +2,7 @@ package psoft.backend.projeto.servicos;
 
 import org.springframework.stereotype.Service;
 import psoft.backend.projeto.entidades.Usuario;
+import psoft.backend.projeto.excecoes.UsuarioJaExisteException;
 import psoft.backend.projeto.repositorios.UsuariosRepository;
 
 import java.util.List;
@@ -16,7 +17,11 @@ public class UsuariosService {
         this.usuariosRepository = usuariosRepository;
     }
 
-    public Usuario cadastraUsuario(Usuario usuario) {
+    public Usuario cadastraUsuario(Usuario usuario) throws UsuarioJaExisteException {
+        if (usuariosRepository.existsById(usuario.getEmail())) {
+            throw new UsuarioJaExisteException("Usuario com mesmo email ja cadastrado!");
+        }
+        
         return this.usuariosRepository.save(usuario);
     }
 

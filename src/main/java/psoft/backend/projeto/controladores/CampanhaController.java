@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.backend.projeto.entidades.Campanha;
+import psoft.backend.projeto.excecoes.CampanhaJaExisteException;
 import psoft.backend.projeto.servicos.CampanhaService;
 import psoft.backend.projeto.servicos.JWTService;
 
 import javax.servlet.ServletException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -33,14 +33,12 @@ public class CampanhaController {
             throws ServletException {
         try {
             if (jwtService.usuarioTemPermissao(header, campanha.getUsuarioDono())) {
-                if (campanhaService.getCampanha(campanha.getUrl()).isPresent()) {
-                    throw new ServletException("Campanha já cadastrada!");
-                }
-
                 return new ResponseEntity<>(campanhaService.cadastraCampanha(campanha), HttpStatus.OK);
             }
-        } catch (ServletException e) {
+        } catch (ServletException se) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } catch (CampanhaJaExisteException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

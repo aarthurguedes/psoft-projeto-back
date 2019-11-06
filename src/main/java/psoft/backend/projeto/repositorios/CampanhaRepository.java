@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CampanhaRepository<T, ID extends Serializable> extends JpaRepository<Campanha, Long> {
 
     Optional<Campanha> findByUrl(String url);
+    Boolean existsByUrl(String url);
 }

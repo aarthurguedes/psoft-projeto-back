@@ -4,10 +4,12 @@ psoft/backend/projeto/controladores/CampanhaController.class
 psoft/backend/projeto/controladores/LoginController$LoginResponse.class
 psoft/backend/projeto/servicos/UsuariosService.class
 psoft/backend/projeto/controladores/UsuariosController.class
+psoft/backend/projeto/excecoes/CampanhaJaExisteException.class
 psoft/backend/projeto/servicos/JWTService.class
 psoft/backend/projeto/ProjetoApplication.class
 psoft/backend/projeto/repositorios/UsuariosRepository.class
 psoft/backend/projeto/controladores/LoginController.class
+psoft/backend/projeto/excecoes/UsuarioJaExisteException.class
 psoft/backend/projeto/filtros/TokenFilter.class
 psoft/backend/projeto/servicos/CampanhaService.class
 psoft/backend/projeto/entidades/Campanha.class

@@ -2,6 +2,7 @@ package psoft.backend.projeto.servicos;
 
 import org.springframework.stereotype.Service;
 import psoft.backend.projeto.entidades.Campanha;
+import psoft.backend.projeto.excecoes.CampanhaJaExisteException;
 import psoft.backend.projeto.repositorios.CampanhaRepository;
 
 import java.util.List;
@@ -17,7 +18,11 @@ public class CampanhaService {
         this.campanhaRepository = campanhaRepository;
     }
 
-    public Campanha cadastraCampanha(Campanha campanha) {
+    public Campanha cadastraCampanha(Campanha campanha) throws CampanhaJaExisteException {
+        if (campanhaRepository.existsByUrl(campanha.getUrl())) {
+            throw new CampanhaJaExisteException("Campanha com mesma url ja existe!");
+        }
+
         return this.campanhaRepository.save(campanha);
     }
 
