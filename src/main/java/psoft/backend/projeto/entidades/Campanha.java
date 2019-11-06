@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,8 +13,8 @@ public class Campanha {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String nome;
     private String url;
+    private String nome;
     private String descricao;
     private String deadline;
     private String status;
@@ -92,12 +90,11 @@ public class Campanha {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Campanha campanha = (Campanha) o;
-        return id == campanha.id &&
-                Objects.equals(url, campanha.url);
+        return id == campanha.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url);
+        return Objects.hash(id);
     }
 }

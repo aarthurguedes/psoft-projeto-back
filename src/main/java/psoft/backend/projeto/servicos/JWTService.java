@@ -37,7 +37,7 @@ public class JWTService {
         String subject = getSujeitoDoToken(authorizationHeader);
         Optional<Usuario> optionalUsuario = usuariosService.getUsuario(subject);
 
-        return  optionalUsuario.isPresent();
+        return optionalUsuario.isPresent();
     }
 
     private String getSujeitoDoToken(String authorizationHeader) throws ServletException {
@@ -59,6 +59,6 @@ public class JWTService {
 
     public String geraToken(String email) {
         return Jwts.builder().setSubject(email).signWith(SignatureAlgorithm.HS512, TOKEN_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 3 * 60 * 1000)).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).compact();
     }
 }
