@@ -1,6 +1,7 @@
 package psoft.backend.projeto.servicos;
 
 import org.springframework.stereotype.Service;
+import psoft.backend.projeto.email.JavaMailApp;
 import psoft.backend.projeto.entidades.Usuario;
 import psoft.backend.projeto.excecoes.UsuarioJaExisteException;
 import psoft.backend.projeto.repositorios.UsuariosRepository;
@@ -21,7 +22,9 @@ public class UsuariosService {
         if (usuariosRepository.existsById(usuario.getEmail())) {
             throw new UsuarioJaExisteException("Usuario com mesmo email ja cadastrado!");
         }
-        
+
+        JavaMailApp javaMailApp = new JavaMailApp();
+        javaMailApp.enviaMensagem(usuario.getEmail());
         return this.usuariosRepository.save(usuario);
     }
 
