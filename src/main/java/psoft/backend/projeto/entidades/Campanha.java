@@ -24,8 +24,8 @@ public class Campanha {
     private String comentarios;
     private int likes;
 
-    public Campanha(String nome, String url, String descricao, String deadline, double metaArrecadacao, String doacoes,
-                    String usuarioDono, String comentarios, int likes) {
+    public Campanha(String nome, String url, String descricao, String status, String deadline, double metaArrecadacao,
+                    String doacoes, String usuarioDono, String comentarios, int likes) {
         this.nome = nome;
         this.url = url;
         this.descricao = descricao;
@@ -35,7 +35,7 @@ public class Campanha {
         this.usuarioDono = usuarioDono;
         this.comentarios = comentarios;
         this.likes = likes;
-        this.status = "ativo";
+        this.status = status;
     }
 
     public Campanha() {
