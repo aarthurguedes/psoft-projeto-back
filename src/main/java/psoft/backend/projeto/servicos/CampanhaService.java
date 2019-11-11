@@ -8,6 +8,7 @@ import psoft.backend.projeto.repositorios.CampanhaRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CampanhaService {
@@ -36,5 +37,15 @@ public class CampanhaService {
 
     public List<Campanha> getCampanhas() {
         return this.campanhaRepository.findAll();
+    }
+
+    public List<Campanha> getCampanhasPeloNome(String nome, boolean retornarTodas) {
+        if (retornarTodas) {
+            return this.campanhaRepository.findByNomeContainingIgnoreCase(nome);
+        } else {
+            return this.campanhaRepository.findByNomeContainingIgnoreCase(nome).stream()
+                    .filter(campanha -> campanha.getStatus().equals("ativa"))
+                    .collect(Collectors.toList());
+        }
     }
 }

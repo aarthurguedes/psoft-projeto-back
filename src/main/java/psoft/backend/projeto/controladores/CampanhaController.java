@@ -10,6 +10,7 @@ import psoft.backend.projeto.servicos.JWTService;
 
 import javax.servlet.ServletException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -50,5 +51,20 @@ public class CampanhaController {
         }
 
         return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
+    }
+
+    @GetMapping("/campanhas/nome")
+    public ResponseEntity<List<Campanha>> getCampanhasPeloNome(@RequestHeader("Authorization") String header,
+                                                               @RequestBody Map<String, String> json) {
+        try {
+            if (jwtService.usuarioTemPermissao(header)) {
+                boolean retornarTodas = Boolean.valueOf(json.get("retornarTodas"));
+                return new ResponseEntity<>(this.campanhaService.getCampanhasPeloNome(json.get("nome"), retornarTodas), HttpStatus.OK);
+            }
+        } catch (ServletException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }
