@@ -23,11 +23,6 @@ public class CampanhaController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/campanhas")
-    public ResponseEntity<List<Campanha>> getCampanhas() {
-        return new ResponseEntity<>(campanhaService.getCampanhas(), HttpStatus.OK);
-    }
-
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> cadastraCampanha(@RequestHeader("Authorization") String header, @RequestBody Campanha campanha) {
         try {
@@ -52,10 +47,10 @@ public class CampanhaController {
         return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
     }
 
-    @GetMapping("/campanhas/?substring={substring}&retornarTodas={retornarTodas}")
+    @GetMapping("/campanhas")
     public ResponseEntity<List<Campanha>> getCampanhasPeloNome(@RequestHeader("Authorization") String header,
-                                                               @PathVariable ("substring") String substring,
-                                                               @PathVariable ("retornarTodas") String retornarTodas) {
+                                                               @RequestParam (value = "substring") String substring,
+                                                               @RequestParam (value = "retornarTodas") String retornarTodas) {
         try {
             if (jwtService.usuarioTemPermissao(header)) {
                 boolean retornarTodasCampanhas = Boolean.valueOf(retornarTodas);
