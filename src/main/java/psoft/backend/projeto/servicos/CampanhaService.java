@@ -39,11 +39,11 @@ public class CampanhaService {
         return this.campanhaRepository.findAll();
     }
 
-    public List<Campanha> getCampanhasPeloNome(String nome, boolean retornarTodas) {
+    public List<Campanha> getCampanhasPeloNome(String substring, boolean retornarTodas) {
         if (retornarTodas) {
-            return this.campanhaRepository.findByNomeContainingIgnoreCase(nome);
+            return this.campanhaRepository.findByNomeContainingIgnoreCase(substring);
         } else {
-            return this.campanhaRepository.findByNomeContainingIgnoreCase(nome).stream()
+            return this.campanhaRepository.findByNomeContainingIgnoreCase(substring).stream()
                     .filter(campanha -> campanha.getStatus().equals("ativa"))
                     .collect(Collectors.toList());
         }
