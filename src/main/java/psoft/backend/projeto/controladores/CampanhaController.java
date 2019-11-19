@@ -39,12 +39,21 @@ public class CampanhaController {
     }
 
     @GetMapping("/campanhas/{url}")
-    public ResponseEntity<Optional<Campanha>> getCampanha(@PathVariable ("url") String url) {
-        if (!campanhaService.getCampanha(url).isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Optional<Campanha>> getCampanha(@RequestHeader("Authorization") String header,
+                                                          @PathVariable ("url") String url) {
+        try {
+            if (jwtService.usuarioTemPermissao(header)) {
+                if (!campanhaService.getCampanha(url).isPresent()) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+
+                return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
+            }
+        } catch (ServletException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/campanhas")
