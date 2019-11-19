@@ -1,9 +1,11 @@
 package psoft.backend.projeto.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,20 +18,24 @@ public class Campanha {
     private String url;
     private String nome;
     private String descricao;
-    private String deadline;
+    private Date deadline;
     private String status;
     private double metaArrecadacao;
     private String doacoes;
     private String usuarioDono;
-    private String comentarios;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "campanha", fetch = FetchType.EAGER)
+    private List<Comentario> comentarios;
+
     private int likes;
 
     public Campanha(String nome, String url, String descricao, String status, String deadline, double metaArrecadacao,
-                    String doacoes, String usuarioDono, String comentarios, int likes) {
+                    String doacoes, String usuarioDono, List<Comentario> comentarios, int likes) throws ParseException {
         this.nome = nome;
         this.url = url;
         this.descricao = descricao;
-        this.deadline = deadline;
+        Date data = new SimpleDateFormat("yyyy-MM-dd").parse(deadline);
+        this.deadline = data;
         this.metaArrecadacao = metaArrecadacao;
         this.doacoes = doacoes;
         this.usuarioDono = usuarioDono;
@@ -57,10 +63,6 @@ public class Campanha {
 
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public String getDeadline() { return deadline; }
-
-    public void setDeadline(String deadline) { this.deadline = deadline; }
-
     public String getStatus() { return status; }
 
     public void setStatus(String status) { this.status = status; }
@@ -69,21 +71,37 @@ public class Campanha {
 
     public void setMetaArrecadacao(double metaArrecadacao) { this.metaArrecadacao = metaArrecadacao; }
 
-    public String getDoacoes() { return doacoes; }
-
-    public void setDoacoes(String doacoes) { this.doacoes = doacoes; }
-
     public String getUsuarioDono() { return usuarioDono; }
 
     public void setUsuarioDono(String usuarioDono) { this.usuarioDono = usuarioDono; }
 
-    public String getComentarios() { return comentarios; }
-
-    public void setComentarios(String comentarios) { this.comentarios = comentarios; }
-
     public int getLikes() { return likes; }
 
     public void setLikes(int likes) { this.likes = likes; }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public Date getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+
+    public String getDoacoes() {
+        return doacoes;
+    }
+
+    public void setDoacoes(String doacoes) {
+        this.doacoes = doacoes;
+    }
 
     @Override
     public boolean equals(Object o) {
