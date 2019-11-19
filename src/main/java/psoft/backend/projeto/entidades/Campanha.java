@@ -1,9 +1,7 @@
 package psoft.backend.projeto.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,11 +19,14 @@ public class Campanha {
     private double metaArrecadacao;
     private String doacoes;
     private String usuarioDono;
-    private String comentarios;
+
+    @OneToMany(mappedBy = "campanha", fetch = FetchType.EAGER)
+    private List<Comentario> comentarios;
+
     private int likes;
 
     public Campanha(String nome, String url, String descricao, String status, String deadline, double metaArrecadacao,
-                    String doacoes, String usuarioDono, String comentarios, int likes) {
+                    String doacoes, String usuarioDono, List<Comentario> comentarios, int likes) {
         this.nome = nome;
         this.url = url;
         this.descricao = descricao;
@@ -77,9 +78,13 @@ public class Campanha {
 
     public void setUsuarioDono(String usuarioDono) { this.usuarioDono = usuarioDono; }
 
-    public String getComentarios() { return comentarios; }
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
 
-    public void setComentarios(String comentarios) { this.comentarios = comentarios; }
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
 
     public int getLikes() { return likes; }
 
