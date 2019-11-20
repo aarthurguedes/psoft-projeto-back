@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.backend.projeto.entidades.Campanha;
+import psoft.backend.projeto.entidades.Comentario;
 import psoft.backend.projeto.excecoes.CampanhaJaExisteException;
 import psoft.backend.projeto.servicos.CampanhaService;
 import psoft.backend.projeto.servicos.JWTService;

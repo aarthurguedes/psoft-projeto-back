@@ -24,7 +24,7 @@ public class Campanha {
     private String doacoes;
     private String usuarioDono;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "campanha", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "campanha", fetch = FetchType.EAGER)
     private List<Comentario> comentarios;
 
     private int likes;

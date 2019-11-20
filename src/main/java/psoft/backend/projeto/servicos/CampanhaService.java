@@ -2,8 +2,10 @@ package psoft.backend.projeto.servicos;
 
 import org.springframework.stereotype.Service;
 import psoft.backend.projeto.entidades.Campanha;
+import psoft.backend.projeto.entidades.Comentario;
 import psoft.backend.projeto.excecoes.CampanhaJaExisteException;
 import psoft.backend.projeto.repositorios.CampanhaRepository;
+import psoft.backend.projeto.repositorios.ComentariosRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
