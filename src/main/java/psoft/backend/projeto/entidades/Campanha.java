@@ -1,9 +1,14 @@
 package psoft.backend.projeto.entidades;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import javax.persistence.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -13,71 +18,97 @@ public class Campanha {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long idCampanha;
 
     private String url;
     private String nome;
     private String descricao;
+
+    @Temporal(TemporalType.DATE)
     private Date deadline;
+
     private String status;
     private double metaArrecadacao;
-    private String doacoes;
-    private String usuarioDono;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "campanha", fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "email")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Usuario usuarioDono;
+
+    @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL)
     private List<Comentario> comentarios;
 
-    private int likes;
+    @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL)
+    private List<Curtida> curtidas;
 
-    public Campanha(String nome, String url, String descricao, String status, String deadline, double metaArrecadacao,
-                    String doacoes, String usuarioDono, List<Comentario> comentarios, int likes) throws ParseException {
-        this.nome = nome;
+    @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL)
+    private List<Doacao> doacoes;
+
+    public Campanha() {}
+
+    public long getIdCampanha() {
+        return idCampanha;
+    }
+
+    public void setIdCampanha(long idCampanha) {
+        this.idCampanha = idCampanha;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
-        Date data = new SimpleDateFormat("yyyy-MM-dd").parse(deadline);
-        this.deadline = data;
-        this.metaArrecadacao = metaArrecadacao;
-        this.doacoes = doacoes;
-        this.usuarioDono = usuarioDono;
-        this.comentarios = comentarios;
-        this.likes = likes;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Campanha() {
+    public double getMetaArrecadacao() {
+        return metaArrecadacao;
     }
 
-    public long getId() { return id; }
+    public void setMetaArrecadacao(double metaArrecadacao) {
+        this.metaArrecadacao = metaArrecadacao;
+    }
 
-    public void setId(long id) { this.id = id; }
+    public Usuario getUsuarioDono() {
+        return usuarioDono;
+    }
 
-    public String getNome() { return nome; }
-
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getUrl() { return url; }
-
-    public void setUrl(String url) { this.url = url; }
-
-    public String getDescricao() { return descricao; }
-
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public String getStatus() { return status; }
-
-    public void setStatus(String status) { this.status = status; }
-
-    public double getMetaArrecadacao() { return metaArrecadacao; }
-
-    public void setMetaArrecadacao(double metaArrecadacao) { this.metaArrecadacao = metaArrecadacao; }
-
-    public String getUsuarioDono() { return usuarioDono; }
-
-    public void setUsuarioDono(String usuarioDono) { this.usuarioDono = usuarioDono; }
-
-    public int getLikes() { return likes; }
-
-    public void setLikes(int likes) { this.likes = likes; }
+    public void setUsuarioDono(Usuario usuarioDono) {
+        this.usuarioDono = usuarioDono;
+    }
 
     public List<Comentario> getComentarios() {
         return comentarios;
@@ -87,20 +118,40 @@ public class Campanha {
         this.comentarios = comentarios;
     }
 
-    public Date getDeadline() {
-		return deadline;
-	}
+    public List<Curtida> getCurtidas() {
+        return curtidas;
+    }
 
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
-	}
+    public void setCurtidas(List<Curtida> curtidas) {
+        this.curtidas = curtidas;
+    }
 
-    public String getDoacoes() {
+    public List<Doacao> getDoacoes() {
         return doacoes;
     }
 
-    public void setDoacoes(String doacoes) {
+    public void setDoacoes(List<Doacao> doacoes) {
         this.doacoes = doacoes;
+    }
+
+    public double valorArrecadado() {
+        double valorArrecadado = 0;
+
+        for (Doacao doacao : this.doacoes) {
+            if (doacao != null) {
+                valorArrecadado += doacao.getQuantiaDoada();
+            }
+        }
+
+        return valorArrecadado;
+    }
+
+    public boolean atingiuMeta() {
+        return this.valorArrecadado() > this.metaArrecadacao;
+    }
+
+    public double diferencaParaMeta() {
+        return this.metaArrecadacao - this.valorArrecadado();
     }
 
     @Override
@@ -108,11 +159,15 @@ public class Campanha {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Campanha campanha = (Campanha) o;
-        return id == campanha.id;
+        return idCampanha == campanha.idCampanha;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idCampanha);
     }
 }
+
+
+
+

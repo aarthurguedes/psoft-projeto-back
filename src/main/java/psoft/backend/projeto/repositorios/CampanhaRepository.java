@@ -14,5 +14,4 @@ public interface CampanhaRepository<T, ID extends Serializable> extends JpaRepos
     Optional<Campanha> findByUrl(String url);
     Boolean existsByUrl(String url);
     List<Campanha> findByNomeContainingIgnoreCase(String nome);
-
 }

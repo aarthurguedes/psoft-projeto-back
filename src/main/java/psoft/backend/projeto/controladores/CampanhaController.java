@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.backend.projeto.entidades.Campanha;
+import psoft.backend.projeto.excecoes.CampanhaInexistenteException;
 import psoft.backend.projeto.excecoes.CampanhaJaExisteException;
 import psoft.backend.projeto.servicos.CampanhaService;
 import psoft.backend.projeto.servicos.JWTService;
@@ -26,7 +27,7 @@ public class CampanhaController {
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> cadastraCampanha(@RequestHeader("Authorization") String header, @RequestBody Campanha campanha) {
         try {
-            if (jwtService.usuarioTemPermissao(header, campanha.getUsuarioDono())) {
+            if (jwtService.usuarioTemPermissao(header, campanha.getUsuarioDono().getEmail())) {
                 return new ResponseEntity<>(campanhaService.cadastraCampanha(campanha), HttpStatus.OK);
             }
         } catch (ServletException se) {
@@ -43,14 +44,12 @@ public class CampanhaController {
                                                           @PathVariable ("url") String url) {
         try {
             if (jwtService.usuarioTemPermissao(header)) {
-                if (!campanhaService.getCampanha(url).isPresent()) {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-                }
-
                 return new ResponseEntity<>(campanhaService.getCampanha(url), HttpStatus.OK);
             }
         } catch (ServletException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } catch (CampanhaInexistenteException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -70,5 +69,10 @@ public class CampanhaController {
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/campanhas/ranking/{criterio}")
+    public ResponseEntity<List<Campanha>> listaCampanhasPorCriterio(@PathVariable ("criterio") String criterio) {
+        return new ResponseEntity<>(this.campanhaService.listaCampanhasPorCriterio(criterio), HttpStatus.OK);
     }
 }
