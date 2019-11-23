@@ -3,10 +3,10 @@ package psoft.backend.projeto.servicos;
 import org.springframework.stereotype.Service;
 import psoft.backend.projeto.email.JavaMailApp;
 import psoft.backend.projeto.entidades.Usuario;
+import psoft.backend.projeto.excecoes.UsuarioInexistenteException;
 import psoft.backend.projeto.excecoes.UsuarioJaExisteException;
 import psoft.backend.projeto.repositorios.UsuariosRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,7 +32,11 @@ public class UsuariosService {
         return this.usuariosRepository.findById(email);
     }
 
-    public List<Usuario> getUsuarios() {
-        return this.usuariosRepository.findAll();
+    public Usuario exibePerfilUsuario(String email) throws UsuarioInexistenteException {
+        if (!this.usuariosRepository.existsById(email)) {
+            throw new UsuarioInexistenteException("Usuario nao encontrado!");
+        }
+
+        return this.usuariosRepository.findById(email).get();
     }
 }

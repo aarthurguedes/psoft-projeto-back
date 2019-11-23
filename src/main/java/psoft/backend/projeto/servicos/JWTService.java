@@ -40,7 +40,7 @@ public class JWTService {
         return optionalUsuario.isPresent();
     }
 
-    private String getSujeitoDoToken(String authorizationHeader) throws ServletException {
+    public String getSujeitoDoToken(String authorizationHeader) throws ServletException {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             throw new ServletException("Token inexistente ou mal formado!");
         }
@@ -59,6 +59,6 @@ public class JWTService {
 
     public String geraToken(String email) {
         return Jwts.builder().setSubject(email).signWith(SignatureAlgorithm.HS512, TOKEN_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)).compact();
     }
 }
