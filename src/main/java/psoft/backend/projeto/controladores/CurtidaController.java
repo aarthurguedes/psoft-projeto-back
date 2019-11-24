@@ -1,5 +1,7 @@
 package psoft.backend.projeto.controladores;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import psoft.backend.projeto.servicos.JWTService;
 import javax.servlet.ServletException;
 
 @RestController
+@Api(value = "API Campanhas")
+@CrossOrigin(origins = "*")
 public class CurtidaController {
 
     private CurtidasService curtidasService;
@@ -23,6 +27,7 @@ public class CurtidaController {
     }
 
     @PostMapping("/curtidas")
+    @ApiOperation(value = "Salva um Like no banco de dados")
     public ResponseEntity<Curtida> adicionaLike(@RequestHeader("Authorization") String header,
                                                 @RequestBody Curtida curtida) {
         try {
@@ -44,6 +49,7 @@ public class CurtidaController {
     }
 
     @DeleteMapping("/curtidas/{id}")
+    @ApiOperation(value = "Remove um Like do banco de dados a partir da url")
     public ResponseEntity<Curtida> removeLike(@PathVariable Long id, @RequestHeader("Authorization") String header) {
         if (!this.curtidasService.getCurtida(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

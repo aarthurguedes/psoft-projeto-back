@@ -1,5 +1,7 @@
 package psoft.backend.projeto.controladores;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import psoft.backend.projeto.servicos.JWTService;
 import javax.servlet.ServletException;
 
 @RestController
+@Api(value = "API Campanhas")
+@CrossOrigin(origins = "*")
 public class ComentarioController {
 
     private ComentariosService comentariosService;
@@ -23,6 +27,7 @@ public class ComentarioController {
     }
 
     @PostMapping("/comentarios")
+    @ApiOperation(value = "Salva um Comentário no banco de dados")
     public ResponseEntity<Comentario> adicionaComentario(@RequestHeader("Authorization") String header,
                                                          @RequestBody Comentario comentario) {
         try {
@@ -44,6 +49,7 @@ public class ComentarioController {
     }
 
     @DeleteMapping("/comentarios/{id}")
+    @ApiOperation(value = "Remove um Comentário do banco de dados a partir da url")
     public ResponseEntity<Comentario> removeComentario(@PathVariable Long id, @RequestHeader("Authorization") String header) {
         if (!this.comentariosService.getComentario(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

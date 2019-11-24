@@ -1,9 +1,8 @@
 package psoft.backend.projeto.controladores;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 import psoft.backend.projeto.entidades.Usuario;
 import psoft.backend.projeto.servicos.JWTService;
 import psoft.backend.projeto.servicos.UsuariosService;
@@ -13,6 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@Api(value = "API Campanhas")
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     private UsuariosService usuariosService;
@@ -24,6 +25,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "Permite o acesso do usuário a determinadas rotas e retorna o seu token JWT")
     public LoginResponse authenticate(@RequestBody Usuario usuario) throws ServletException {
         Optional<Usuario> authUsuario = usuariosService.getUsuario(usuario.getEmail());
 
