@@ -7,6 +7,7 @@ import psoft.backend.projeto.excecoes.UsuarioInexistenteException;
 import psoft.backend.projeto.excecoes.UsuarioJaExisteException;
 import psoft.backend.projeto.repositorios.UsuariosRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,9 @@ public class UsuariosService {
         }
 
         return this.usuariosRepository.findById(email).get();
+    }
+
+    public List<Usuario> getUsuariosPeloEmail(String email) {
+        return this.usuariosRepository.findByEmailContainingIgnoreCase(email);
     }
 }

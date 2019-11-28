@@ -1,5 +1,6 @@
 package psoft.backend.projeto.controladores;
 
+import com.sun.mail.iap.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import psoft.backend.projeto.entidades.Usuario;
 import psoft.backend.projeto.excecoes.UsuarioInexistenteException;
 import psoft.backend.projeto.excecoes.UsuarioJaExisteException;
 import psoft.backend.projeto.servicos.UsuariosService;
+
+import java.util.List;
 
 @RestController
 @Api(value = "API Campanhas")
@@ -39,5 +42,11 @@ public class UsuariosController {
         } catch (UsuarioInexistenteException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/usuarios")
+    @ApiOperation(value = "Retorna uma Lista de Usuários a partir do email contido na url")
+    public ResponseEntity<List<Usuario>> getUsuariosPeloEmail(@RequestParam (value = "email") String email) {
+        return new ResponseEntity<>(usuariosService.getUsuariosPeloEmail(email), HttpStatus.OK);
     }
 }

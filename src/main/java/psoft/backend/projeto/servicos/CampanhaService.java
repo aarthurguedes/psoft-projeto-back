@@ -57,16 +57,22 @@ public class CampanhaService {
 
         if (criterio.equals("diferencaMeta")) {
             Collections.sort(campanhas, new ComparadorDiferencaParaMeta());
-            return campanhas.stream().filter(campanha -> campanha.getStatus().equals("ativa"))
-                    .collect(Collectors.toList());
+            return campanhas.stream().filter(campanha -> {
+                atualizaStatus(campanha);
+                return campanha.getStatus().equals("ativa");
+            }).collect(Collectors.toList());
         } else if (criterio.equals("like")) {
             Collections.sort(campanhas, new ComparadorLikeCampanha());
-            return campanhas.stream().filter(campanha -> campanha.getStatus().equals("ativa"))
-                    .collect(Collectors.toList());
+            return campanhas.stream().filter(campanha -> {
+                atualizaStatus(campanha);
+                return campanha.getStatus().equals("ativa");
+            }).collect(Collectors.toList());
         } else {
             Collections.sort(campanhas, new ComparadorDataCampanha());
-            return campanhas.stream().filter(campanha -> campanha.getStatus().equals("ativa"))
-                    .collect(Collectors.toList());
+            return campanhas.stream().filter(campanha -> {
+                atualizaStatus(campanha);
+                return campanha.getStatus().equals("ativa");
+            }).collect(Collectors.toList());
         }
     }
 
