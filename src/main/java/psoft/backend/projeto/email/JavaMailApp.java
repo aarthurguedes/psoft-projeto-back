@@ -46,7 +46,7 @@ public class JavaMailApp {
 
             message.setRecipients(Message.RecipientType.TO, toUser);
             message.setSubject("Boas-Vindas!");//Assunto
-            message.setText("Seja bem-vindo(a) à plataforma AJuDE!\nLink para acesso ao sistema: --link aqui--");
+            message.setText("Seja bem-vindo(a) à plataforma AJuDE!\nLink para acesso ao sistema: https://danilomfreitas.github.io/");
             /**Método para enviar a mensagem criada*/
             Transport.send(message);
 
