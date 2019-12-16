@@ -28,4 +28,3 @@ Optamos por deixar o token válido por um período de 2 horas, visto que se trat
 * [Link para o backend implantando](https://ajude-api.herokuapp.com/)
 * [Link para a documentação swagger da API](http://ajude-api.herokuapp.com/api/swagger-ui.html)
 * [Link da aplicação operacional implantada e integrada com frontend](https://danilomfreitas.github.io/)
-* [Vídeo demonstrativo da aplicação](https://youtu.be/1fGkcrHUl6A)
